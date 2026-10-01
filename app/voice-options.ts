@@ -1,4 +1,5 @@
 export const VOICE_OPTIONS = [
+  { id: "auto", label: "Auto-detect Arabic & English", nativeLabel: "تلقائي" },
   { id: "gulf", label: "Gulf Arabic", nativeLabel: "الخليجية" },
   { id: "egyptian", label: "Egyptian Arabic", nativeLabel: "المصرية" },
   { id: "levantine", label: "Levantine Arabic", nativeLabel: "الشامية" },

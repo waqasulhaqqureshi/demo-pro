@@ -47,7 +47,7 @@ function getStartErrorMessage(error: unknown): string {
 }
 
 export default function VoiceAgent() {
-  const [selectedOption, setSelectedOption] = useState<VoiceOptionId>("gulf");
+  const [selectedOption, setSelectedOption] = useState<VoiceOptionId>("auto");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const [messages, setMessages] = useState<TranscriptMessage[]>([]);
@@ -309,10 +309,10 @@ export default function VoiceAgent() {
         <p className="eyebrow">A voice agent for real conversation</p>
         <h1 id="page-title">Arabic, the way it&apos;s spoken.</h1>
         <p className="intro-copy">
-          Try a familiar local dialect, or switch to clear American English. Say hello and Sawt will speak first.
+          By default, Sawt follows the Arabic dialect or English you speak and can switch with you mid-conversation. Choose a style to set a preference. Sawt greets you first.
         </p>
 
-        <label className="field-label" htmlFor="voice-style">Speaking style</label>
+        <label className="field-label" htmlFor="voice-style">Language mode</label>
         <div className="select-wrap">
           <select
             id="voice-style"

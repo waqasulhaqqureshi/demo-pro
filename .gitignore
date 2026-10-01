@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# Uploaded API-key screenshots
+/1.png
+
 # vercel
 .vercel
 

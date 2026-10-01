@@ -1,36 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sawt — Arabic voice agent
 
-## Getting Started
+A minimal, real-time voice demo built with Next.js and Gemini Live. Choose Gulf, Egyptian, Levantine, Iraqi, or Moroccan Arabic, or neutral US English. Sawt greets you first, then listens for an interruption or reply.
 
-First, run the development server:
+## Run locally
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Install dependencies with `npm install`.
+2. Copy `.env.example` to `.env.local` and set `GEMINI_API_KEY` to a Gemini API key. The key is used only by the server to mint a short-lived, single-use Live API token; it is never sent to the browser.
+3. Run `npm run dev` and open the local URL. Allow microphone access when prompted. Microphone access requires localhost or HTTPS.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The browser connects directly to Gemini Live over a WebSocket after receiving its ephemeral token. This avoids relaying the live audio through the Next.js server and helps keep round-trip latency low. Audio is captured as mono PCM at 16 kHz and model audio is played as 24 kHz PCM.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploy to Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Add `GEMINI_API_KEY` as a **server-side** environment variable in the Vercel project settings (do not use a `NEXT_PUBLIC_` prefix).
+- Run `npm run build` to check the production build before deployment.
+- The `/api/live-token` route validates the requested speaking profile and same-origin requests. The returned token is restricted to the selected server-side instructions, the Live model, and one session.
+- Before making a public launch, add persistent rate limiting or an authenticated access gate to `/api/live-token` and set Gemini usage / billing limits. Same-origin checks and single-use tokens are not a substitute for production abuse controls.
 
-## Learn More
+## Voice and language notes
 
-To learn more about Next.js, take a look at the following resources:
+The system instructions favor conversational local phrasing, Arabic script, and staying within the selected dialect instead of slipping into formal Arabic or another region's vocabulary. The English profile uses a neutral General American style. Live audio uses the Gemini voice `Kore`; the model selects language from the conversation. Arabic output quality can vary by topic and should be tested with native speakers from each target region.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The original request mentioned a PDF with additional Arabic speaking guidance, but no PDF was included in the repository. The dialect instructions here are a fresh starting point and can be adapted when that document is available.
